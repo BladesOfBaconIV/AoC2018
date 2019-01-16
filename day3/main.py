@@ -7,7 +7,6 @@ with open('input.txt', 'r') as f:
 GRID_X = 1000
 GRID_Y = 1000
 
-# part 1
 grid_1 = zeros((GRID_X, GRID_Y))
 grid_2 = zeros((GRID_X, GRID_Y))
 valid_ids = set()
