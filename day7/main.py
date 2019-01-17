@@ -1,4 +1,4 @@
-from networkx import DiGraph
+import networkx as nx
 import re
 
 with open('input.txt', 'r') as f:
@@ -19,12 +19,27 @@ while len(step_order_single) < len(step_requirements):
     step_order_single += min(possible_steps)
 
 # Part 2
-graph = DiGraph()
+step_time = 0
+graph = nx.DiGraph()
+graph.add_node(0) # start point
 while len(graph.nodes()) < len(step_requirements):
-    can_be_added = set()
     for step, requirements in step_requirements.items():
-        if requirements.issubset(set(graph.nodes())) and step not in step_order_single:
-            can_be_added.add(step)
-    for node in can_be_added:
-        graph.add_node(node)
-        graph.add_edge()
+        if requirements == None:
+            continue
+        if requirements == set(): # add steps with no requirements
+            print("Adding step: ", step, requirements)
+            graph.add_node(step)
+            graph.add_edge(0, step, weight=ord(step)-64+step_time)
+            step_requirements[step] = None
+        elif requirements.issubset(set(graph.nodes())): # add graph with all requirements completed
+            print("Adding step: ", step, requirements)
+            graph.add_node(step)
+            graph.add_edge(list(requirements)[0], step, weight=ord(step)-64+step_time)
+            step_requirements[step] = None # remove node from list
+        for remaining_steps, remaining_req in step_requirements.items():
+            for node in graph.nodes():
+                if remaining_req != None and len(remaining_req) > 1 and node in remaining_req:
+                    step_requirements[remaining_steps].remove(node)
+time = nx.dag_longest_path_length(graph)
+nx.draw_networkx(graph)
+print("Part 1:", step_order_single, "Part 2: ", time)
