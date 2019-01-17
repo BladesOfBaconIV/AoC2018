@@ -1,3 +1,4 @@
+from networkx import DiGraph
 import re
 
 with open('input.txt', 'r') as f:
@@ -18,5 +19,12 @@ while len(step_order_single) < len(step_requirements):
     step_order_single += min(possible_steps)
 
 # Part 2
-# Going to try with graphs
-# NetworkX has DiGraph module for directional graphs
+graph = DiGraph()
+while len(graph.nodes()) < len(step_requirements):
+    can_be_added = set()
+    for step, requirements in step_requirements.items():
+        if requirements.issubset(set(graph.nodes())) and step not in step_order_single:
+            can_be_added.add(step)
+    for node in can_be_added:
+        graph.add_node(node)
+        graph.add_edge()
