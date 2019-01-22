@@ -1,16 +1,22 @@
-from numpy import fromfunction, ndenumerate 
+from numpy import fromfunction, ndenumerate, vectorize
 
 # Your puzzle input was 7400
 SERIAL_NUMBER = 7400
 SIZE_X, SIZE_Y = 300, 300
 
-def get_power(x, y):
-    RACK_ID = x + 10
-    power = ((RACK_ID * y) + SERIAL_NUMBER) * RACK_ID
-    power = (power % 1000) // 100
-    return power - 5
+def get_power(x0, y0): # get the sum of the powers for slice grid[x:SIZE_X+1, y:SIZE_Y+1]
+    powers = []
+    for x in range(int(x0), SIZE_X+1):
+        print(x)
+        for y in range(int(y0), SIZE_Y+1):
+            RACK_ID = x + 10
+            power = ((RACK_ID * y) + SERIAL_NUMBER) * RACK_ID
+            power = (power % 1000) // 100
+            powers.append(power - 5)
+    return sum(powers)
 
-grid = fromfunction(get_power, (SIZE_X, SIZE_Y))
+
+grid = fromfunction(vectorize(get_power), (SIZE_X, SIZE_Y))
 
 # Seriously slow, needs optimising
 max_power_square_size = []
@@ -18,8 +24,8 @@ for square_size in range(1, 35): # assuming less than 35
     print(square_size) # Takes a while 
     max_power = 0
     max_x, max_y = 0, 0
-    for (x, y), power in ndenumerate(grid[:SIZE_X-square_size, :SIZE_Y-square_size]):
-        power = sum(grid[x:x+square_size, y:y+square_size].flatten())
+    for (x, y), p in ndenumerate(grid[:SIZE_X-square_size, :SIZE_Y-square_size]):
+        power = grid[x, y] - grid[x+square_size, y] - grid[x, y+square_size] + grid[x+square_size, y+square_size]
         if power > max_power:
             max_power = power
             max_x, max_y = x, y
