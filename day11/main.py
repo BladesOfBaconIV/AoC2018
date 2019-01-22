@@ -1,16 +1,16 @@
-from numpy import fromfunction, ndenumerate, vectorize
+from numpy import fromfunction, ndenumerate
 
 # Your puzzle input was 7400
 SERIAL_NUMBER = 7400
 SIZE_X, SIZE_Y = 300, 300
 
-def get_power(x, y): # get the sum of the powers for slice grid[x:SIZE_X+1, y:SIZE_Y+1]
+def get_power(x, y):
     RACK_ID = x + 10
     power = ((RACK_ID * y) + SERIAL_NUMBER) * RACK_ID
     power = (power % 1000) // 100
     return power - 5
 
-
+# make a summed area table for the power levels
 grid = fromfunction(vectorize(get_power), (SIZE_X, SIZE_Y)).cumsum(axis=0).cumsum(axis=1)
 
 
