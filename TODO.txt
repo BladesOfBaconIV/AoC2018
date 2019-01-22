@@ -1,0 +1,1 @@
+Add visualisations for solutions, eg. square_size vs. power graph for day 11
