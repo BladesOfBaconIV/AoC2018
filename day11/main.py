@@ -16,7 +16,7 @@ grid = fromfunction(vectorize(get_power), (SIZE_X, SIZE_Y)).cumsum(axis=0).cumsu
 
 # Seriously slow, needs optimising
 max_power_square_size = []
-for square_size in range(1, 35): # assuming less than 35
+for square_size in range(1, SIZE_X): # assuming less than 35
     print(square_size) # Takes a while 
     max_power = 0
     max_x, max_y = 0, 0
@@ -25,7 +25,7 @@ for square_size in range(1, 35): # assuming less than 35
         if power > max_power:
             max_power = power
             max_x, max_y = x, y
-    max_power_square_size.append((square_size, (max_x, max_y), max_power))
+    max_power_square_size.append((square_size, (max_x+1, max_y+1), max_power))
 # Part 1
 part_1_max = max(max_power_square_size, key=lambda k: (k[0] == 3, k[2]))
 
