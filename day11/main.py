@@ -11,13 +11,11 @@ def get_power(x, y):
     return power - 5
 
 # make a summed area table for the power levels
-grid = fromfunction(vectorize(get_power), (SIZE_X, SIZE_Y)).cumsum(axis=0).cumsum(axis=1)
+grid = fromfunction(get_power, (SIZE_X, SIZE_Y)).cumsum(axis=0).cumsum(axis=1)
 
-
-# Seriously slow, needs optimising
-max_power_square_size = []
-for square_size in range(1, SIZE_X): # assuming less than 35
-    print(square_size) # Takes a while 
+# Could probably be optimised further
+max_power_square_size = [] # Stores info as [(square_size, (x, y), max_power), ...]
+for square_size in range(1, SIZE_X): 
     max_power = 0
     max_x, max_y = 0, 0
     for (x, y), p in ndenumerate(grid[:SIZE_X-square_size, :SIZE_Y-square_size]):
