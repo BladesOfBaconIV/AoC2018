@@ -22,11 +22,24 @@ while len(step_order_single) < len(step_requirements):
     step_order_single += min(possible_steps)
 
 # Part 2
-step_time = 0
+step_time = 60
+num_workers = 5
 graph = nx.DiGraph()
-for u, v in edges:
-    graph.add_edge(u, v, weight=ord(v)-64)
-time = nx.dag_longest_path_length(graph)
-nx.draw_networkx(graph)
-plt.show()
-print("Part 1:", step_order_single, "Part 2: ", time)
+for v, u in edges:
+    graph.add_edge(u, v)
+
+for node in graph.nodes:
+    graph.nodes[node]['work'] = ord(node) - 64 + step_time
+
+time = 0
+while graph.nodes:
+    possible_steps = sorted([n for n in graph.nodes if not graph.in_degree(n)]
+                            , key=lambda n: graph.nodes[n]['work'])
+    for worker, node in zip(range(num_workers), possible_steps):
+        graph.nodes[node]['work'] -= 1
+
+        if not graph.nodes[node]['work']:
+            graph.remove_node(node)
+    time += 1
+
+print("Part 1: ", step_order_single, "Part 2: ", time)
