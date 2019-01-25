@@ -26,11 +26,13 @@ step_time = 60
 num_workers = 5
 graph = nx.DiGraph()
 for v, u in edges:
-    graph.add_edge(u, v)
+    graph.add_edge(v, u)
 
 for node in graph.nodes:
     graph.nodes[node]['work'] = ord(node) - 64 + step_time
 
+nx.draw_networkx(graph)
+plt.show()
 time = 0
 while graph.nodes:
     possible_steps = sorted([n for n in graph.nodes if not graph.in_degree(n)]
