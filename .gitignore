@@ -1,4 +1,5 @@
 python/.vscode/*
+out/*
 .vscode/*
-.idea/*
+*.xml
 *.iml
