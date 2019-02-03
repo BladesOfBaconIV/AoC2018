@@ -4,9 +4,7 @@ from Cart import Cart
 with open('input.txt', 'r') as f:
     lines = [line.strip('\n') for line in f.readlines()]
 
-print(len(lines))
-
-track_map = zeros((len(lines), max(map(len, lines))))
+track_map = zeros((max(map(len, lines)), len(lines)))
 carts = []
 track_conversion_dict = {
     ' ': 0,
@@ -17,9 +15,9 @@ track_conversion_dict = {
     '+': 4
 }
 possible_carts = {
-    'v': -1j,
+    'v': 1j,
     '>': 1,
-    '^': 1j,
+    '^': -1j,
     '<': -1
 }
 for line_num, line in enumerate(lines):
@@ -30,10 +28,24 @@ for line_num, line in enumerate(lines):
         else:
             track_map[char_num, line_num] = track_conversion_dict[char]
 
-while len(carts) > 1:
+removed_carts = []
+while len(carts) != 1:
     for cart in carts:
         track = track_map[cart.get_x_y()]
-        if track == 1: # if the track its on isn't a bend
-            cart.move()
-        elif track == 2:
-            if cart.orientation == 
+        if track == 2:
+            if cart.orientation.imag:
+                cart.turn_90_right(3)
+            else:
+                cart.turn_90_right()
+        elif track == 3:
+            if cart.orientation.imag:
+                cart.turn_90_right()
+            else:
+                cart.turn_90_right(3)
+        elif track == 4:
+            cart.turn_90_right(cart.get_current_turn())
+        cart.move()
+        removed_carts.extend(carts[0].remove_crashed(carts))
+    
+
+print(removed_carts[0].get_x_y(), carts[0].pos)

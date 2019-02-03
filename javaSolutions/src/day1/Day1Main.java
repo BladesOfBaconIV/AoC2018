@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 public class Day1Main {
 
     public static void main(String[] args) {
-        final String inputFile = "D:\\\\Git\\AoC2018\\javaSolutions\\src\\day1\\input.txt";
+        final String inputFile = "day1\\input.txt";
         Supplier<IntStream> inputGet = () -> inputParser.getLinesAsInts(inputFile);
         IntStream deltas = inputGet.get();
 
