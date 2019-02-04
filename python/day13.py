@@ -48,4 +48,4 @@ while len(carts) != 1:
         removed_carts.extend(carts[0].remove_crashed(carts))
     
 
-print(removed_carts[0].get_x_y(), carts[0].pos)
+print('Part 1: ', removed_carts[0].get_x_y(), 'Part 2: ', carts[0].pos)
