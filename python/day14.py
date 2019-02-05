@@ -1,22 +1,18 @@
+import re
 
 INPUT = 540391
-in_as_list = [5, 4, 0, 3, 9, 1]
-recipes = [3, 7]
-positions = (0, 1)
+INPUT_STR = '540391'
+recipes = '37'
+p1 = 0
+p2 = 1
 
-while True:
+
+while INPUT_STR not in recipes[-7:]:
     # make the new recipes
-    new_score = recipes[positions[0]] + recipes[positions[1]]
-    if new_score >= 10:
-        new_score = [new_score//10, new_score%10]
-        recipes.extend(new_score)
-    else:
-        recipes.append(new_score)
+    recipes += str(int(recipes[p1] + recipes[p2]))
     #update the positions
-    positions = tuple(map(lambda p: (recipes[p] + 1 + p)%len(recipes), positions))
-    # part 1
-    if len(recipes) >= INPUT + 10:
-        part_1 = ''.join(map(str, recipes[INPUT:INPUT+10]))
-        break
+    p1 = (p1 + int(recipes[p1]) + 1) % len(recipes)
+    p2 = (p2 + int(recipes[p2]) + 1) % len(recipes)
+    print(len(recipes))
     
-print(part_1)
+print("Part 1: ", recipes[INPUT:INPUT+10], "Part 2: ", recipes.index(INPUT_STR))
