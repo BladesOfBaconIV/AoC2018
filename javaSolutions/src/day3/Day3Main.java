@@ -40,10 +40,10 @@ public class Day3Main {
     }
 
     public static void insertClaim(String c) {
-        Matcher mathches = p.matcher(c);
+        Matcher matches = p.matcher(c);
         ArrayList<Integer> args = new ArrayList<Integer>();
-        while (mathches.find()) {
-            args.add(Integer.parseInt(mathches.group(0)));
+        while (matches.find()) {
+            args.add(Integer.parseInt(matches.group(0)));
         }
         cloth.addClaim(args);
     }
