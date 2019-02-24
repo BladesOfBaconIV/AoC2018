@@ -1,10 +1,8 @@
 package day4;
 
 import helperClasses.inputParser;
-import jdk.internal.dynalink.linker.ConversionComparator;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
