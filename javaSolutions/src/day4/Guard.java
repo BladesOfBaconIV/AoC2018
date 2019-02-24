@@ -32,4 +32,8 @@ public class Guard {
     public ArrayList<Integer> getTimesAsleep() {
         return this.timesAsleep;
     }
+
+    public int getID() {
+        return this.id;
+    }
 }
