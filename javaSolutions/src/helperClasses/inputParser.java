@@ -28,4 +28,13 @@ public class inputParser {
         }
     }
 
+    public static IntStream getLineAsChars(String filename) {
+        try {
+            return Files.lines(Paths.get(path + filename)).findFirst().get().chars();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return IntStream.of();
+        }
+    }
+
 }
