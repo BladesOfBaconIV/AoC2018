@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import helperClasses.inputParser;
 
@@ -20,8 +19,7 @@ public class Day5Main {
         int shortestLength = 50000;
         for (int i = 97; i < 123; i ++) { // from char a to z inclusive
             Integer I = new Integer(i); // needs to be effectively final for lambda
-            int size = reducedLength(chars.get().filter(c -> c!=I && c!=I+32));
-            System.out.println(size);
+            int size = reducedLength(chars.get().filter(c -> c!=I && c!=I-32));
             if (size < shortestLength) {
                 shortestLength = size;
             }
@@ -33,7 +31,6 @@ public class Day5Main {
     public static int reducedLength(IntStream chars) {
         ArrayList<Integer> letters = new ArrayList<>();
         letters.addAll(chars.boxed().collect(Collectors.toList()));
-        //System.out.println(letters.size());
         boolean reduced;
         do {
             reduced = false;
